@@ -1,0 +1,61 @@
+server:
+  port: 8000
+
+## 暴露健康端点检查
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+feign:
+  hystrix:
+    enabled: false
+
+  # 自定义重试策略
+  custom:
+    retry:
+      enable: true
+      period: 200
+      maxPeriod: 1000
+      # 表示每间隔200ms，最大间隔500ms重试一次，最大重试次数是3，因为第三个参数包含了第一次请求。
+      maxAttempts: 3
+
+  # feign 客户端配置
+  client:
+
+    config:
+
+      # order-feign-client 客户端配置
+      order-feign-client:
+        # 配置日志级别
+        loggerLevel: full
+
+        # 拦截器配置
+        requestInterceptors:
+          - com.zpb.cloud.openfeign.feign.OrderInterceptor
+
+
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
+
+
+# 配置重试策略
+springcloud-openFeign-service:
+  ribbon:
+    MaxAutoRetries: 5
+    MaxAutoRetriesNextServer: 5
+    OkToRetryOnAllOperations: true
+    retryableStatusCodes: 500
+
+
+# 配置日志
+logging:
+  level:
+    com.zpb.cloud.openfeign.api.OrderOpenFeignClient: info

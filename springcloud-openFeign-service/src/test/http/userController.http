@@ -1,0 +1,15 @@
+GET http://localhost:9000/user/page/structure.list
+Accept: application/json
+
+###
+
+
+GET {{host}}/user/get
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name":"张三"
+}
+
+###

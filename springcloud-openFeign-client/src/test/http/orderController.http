@@ -1,0 +1,9 @@
+### order 请求
+
+GET http://localhost:8000/client/order/get
+Content-Type: application/json
+Accept: application/json
+
+{
+  "orderId":1
+}
